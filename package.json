@@ -1,0 +1,44 @@
+{
+  "name": "@sim-phi/extends",
+  "version": "0.2.0",
+  "description": "Third-party chart format conversion functions for sim-phi.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "eslint:check": "eslint --ext .js,.ts src",
+    "eslint:format": "eslint --fix \"src/**/*.{js,ts}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sim-phi/extends.git"
+  },
+  "keywords": [
+    "sim-phi",
+    "phigros"
+  ],
+  "author": "lchzh3473",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/sim-phi/extends/issues"
+  },
+  "homepage": "https://github.com/sim-phi/extends",
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "eslint-plugin-rulesdir": "^0.2.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.6.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "@sim-phi:registry": "https://npm.pkg.github.com"
+  }
+}
