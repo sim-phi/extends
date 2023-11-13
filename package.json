@@ -1,6 +1,6 @@
 {
   "name": "@sim-phi/extends",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Third-party chart format conversion functions for sim-phi.",
   "type": "module",
   "main": "dist/index.js",
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/sim-phi/extends",
   "devDependencies": {
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.23.3",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-terser": "^0.4.4",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
