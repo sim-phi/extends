@@ -1,6 +1,9 @@
 'use strict';
 module.exports = {
-  extends: ['plugin:@typescript-eslint/all'],
+  extends: [
+    'plugin:@typescript-eslint/all',
+    './eslint-config.cjs'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -10,20 +13,15 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-nocheck': 'allow-with-description' }],
-    '@typescript-eslint/brace-style': ['error', '1tbs', { allowSingleLine: true }],
     '@typescript-eslint/consistent-type-imports': ['error', { disallowTypeAnnotations: false }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     // '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-    '@typescript-eslint/indent': ['error', 2, { SwitchCase: 1 }],
-    '@typescript-eslint/lines-around-comment': ['error', { beforeBlockComment: false }],
-    '@typescript-eslint/lines-between-class-members': ['error', 'never'],
     '@typescript-eslint/max-params': 'off',
     '@typescript-eslint/member-ordering': ['error', { default: memberOrdering() }],
     '@typescript-eslint/naming-convention': ['error', ...defaultNamingConvention(), { selector: 'import', format: null }],
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true, ignoreRestArgs: true }],
-    '@typescript-eslint/no-extra-parens': ['error', 'all', { enforceForSequenceExpressions: false }],
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
     '@typescript-eslint/no-magic-numbers': 'off',
@@ -35,13 +33,16 @@ module.exports = {
     // '@typescript-eslint/no-unsafe-member-access': 'off', // qwq
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-use-before-define': ['error', 'nofunc'],
-    '@typescript-eslint/object-curly-spacing': ['error', 'always'],
     '@typescript-eslint/prefer-destructuring': 'off',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/prefer-readonly-parameter-types': 'off',
-    '@typescript-eslint/quotes': ['error', 'single'],
-    '@typescript-eslint/semi': ['error', 'always', { omitLastInOneLineBlock: true }],
-    '@typescript-eslint/space-before-function-paren': ['error', 'never']
+    'default-param-last': 'off', // qwq
+    'no-invalid-this': 'off', // qwq
+    'no-redeclare': 'off', // qwq
+    'no-shadow': 'off', // qwq
+    'no-undef': 'off', // qwq
+    'no-use-before-define': 'off', // qwq
+    'require-await': 'off' // qwq
   }
 };
 function memberOrdering() {
