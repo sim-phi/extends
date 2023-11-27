@@ -57,11 +57,8 @@ export function normalizeSpeedEvents(events: SpeedEventPGS[]): void {
   if (events.length) {
     const maxEndTime = events.reduce((max, e) => Math.max(max, e.endTime), 0);
     if (maxEndTime < 1e9) {
-      events.push({
-        startTime: maxEndTime,
-        endTime: 1e9,
-        value: events[events.length - 1].value
-      });
+      const { value } = events[events.length - 1];
+      events.push({ startTime: maxEndTime, endTime: 1e9, value });
     }
   } else {
     events.push({ startTime: 0, endTime: 1e9, value: 1 });
@@ -71,14 +68,8 @@ export function normalizeLineEvents(events: JudgeLineEventPGS[]): void {
   if (events.length) {
     const maxEndTime = events.reduce((max, e) => Math.max(max, e.endTime), 0);
     if (maxEndTime < 1e9) {
-      events.push({
-        startTime: maxEndTime,
-        endTime: 1e9,
-        start: events[events.length - 1].start,
-        end: events[events.length - 1].end,
-        start2: events[events.length - 1].start2,
-        end2: events[events.length - 1].end2
-      });
+      const { end, end2 } = events[events.length - 1];
+      events.push({ startTime: maxEndTime, endTime: 1e9, start: end, end, start2: end2, end2 });
     }
   } else {
     events.push({ startTime: 0, endTime: 1e9, start: 0, end: 0, start2: 0, end2: 0 });
