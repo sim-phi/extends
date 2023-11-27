@@ -126,6 +126,7 @@ function pushLineEvent(ls: LineEventPecDelta[], le: LineEventRPE2) {
 }
 function toSpeedEvent(le: LineEventRPE2[]) {
   const result = [];
+  if (!le.length || le[0].startTime > 0) result.push({ time: 0, value: 0 });
   for (const i of le) {
     const { startTime, endTime, start, end } = i;
     result.push({ time: startTime, value: start });

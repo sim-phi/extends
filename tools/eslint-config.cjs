@@ -16,7 +16,7 @@ module.exports = {
     '@stylistic/array-element-newline': ['error', 'consistent'],
     '@stylistic/arrow-parens': ['error', 'as-needed'],
     '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-    '@stylistic/function-call-argument-newline': ['error', 'never'],
+    '@stylistic/function-call-argument-newline': ['error', 'consistent'],
     '@stylistic/indent': ['error', 2, { SwitchCase: 1 }],
     '@stylistic/lines-around-comment': ['error', { beforeBlockComment: false }],
     '@stylistic/lines-between-class-members': ['error', 'never'],

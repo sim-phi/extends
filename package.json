@@ -1,6 +1,6 @@
 {
   "name": "@sim-phi/extends",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Third-party chart format conversion functions for sim-phi.",
   "type": "module",
   "main": "dist/index.js",

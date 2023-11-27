@@ -23,7 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
-# lock files
+# Lock files
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+# Custom
+test
