@@ -595,41 +595,42 @@ export function parse(pec: string, filename: string): {
         lineRPE.pushNote(type, time, positionX, holdTime, speed, note.above === 1, note.isFake !== 0, note.alpha === 0);
       }
     }
-    for (const e of i.eventLayers) {
-      if (!e) continue; // 有可能是null
+    for (const evts of i.eventLayers) {
+      if (!evts) continue; // 有可能是null
       const layer = new EventLayer1();
-      for (const j of e.moveXEvents || []) {
-        const startTime = bpmList.calc2(j.startTime);
-        const endTime = bpmList.calc2(j.endTime);
-        const { fn, code } = getEasingFn(j, startTime, endTime);
-        getWarning(code, j);
-        layer.pushMoveXEvent(startTime, endTime, j.start, j.end, fn);
+      for (const evt of evts.moveXEvents || []) {
+        const startTime = bpmList.calc2(evt.startTime);
+        const endTime = bpmList.calc2(evt.endTime);
+        const { fn, code } = getEasingFn(evt, startTime, endTime);
+        getEasingWarning(code, evt);
+        layer.pushMoveXEvent(startTime, endTime, evt.start, evt.end, fn);
       }
-      for (const j of e.moveYEvents || []) {
-        const startTime = bpmList.calc2(j.startTime);
-        const endTime = bpmList.calc2(j.endTime);
-        const { fn, code } = getEasingFn(j, startTime, endTime);
-        getWarning(code, j);
-        layer.pushMoveYEvent(startTime, endTime, j.start, j.end, fn);
+      for (const evt of evts.moveYEvents || []) {
+        const startTime = bpmList.calc2(evt.startTime);
+        const endTime = bpmList.calc2(evt.endTime);
+        const { fn, code } = getEasingFn(evt, startTime, endTime);
+        getEasingWarning(code, evt);
+        layer.pushMoveYEvent(startTime, endTime, evt.start, evt.end, fn);
       }
-      for (const j of e.rotateEvents || []) {
-        const startTime = bpmList.calc2(j.startTime);
-        const endTime = bpmList.calc2(j.endTime);
-        const { fn, code } = getEasingFn(j, startTime, endTime);
-        getWarning(code, j);
-        layer.pushRotateEvent(startTime, endTime, j.start, j.end, fn);
+      for (const evt of evts.rotateEvents || []) {
+        const startTime = bpmList.calc2(evt.startTime);
+        const endTime = bpmList.calc2(evt.endTime);
+        const { fn, code } = getEasingFn(evt, startTime, endTime);
+        getEasingWarning(code, evt);
+        layer.pushRotateEvent(startTime, endTime, evt.start, evt.end, fn);
       }
-      for (const j of e.alphaEvents || []) {
-        const startTime = bpmList.calc2(j.startTime);
-        const endTime = bpmList.calc2(j.endTime);
-        const { fn, code } = getEasingFn(j, startTime, endTime);
-        getWarning(code, j);
-        layer.pushAlphaEvent(startTime, endTime, j.start, j.end, fn);
+      for (const evt of evts.alphaEvents || []) {
+        const startTime = bpmList.calc2(evt.startTime);
+        const endTime = bpmList.calc2(evt.endTime);
+        const { fn, code } = getEasingFn(evt, startTime, endTime);
+        if (evt.start < 0 || evt.end < 0) warn(1, 'LineAlphaWarning', `检测到负数alpha(将被视为0)\n位于:"${JSON.stringify(evt)}"`);
+        getEasingWarning(code, evt);
+        layer.pushAlphaEvent(startTime, endTime, evt.start, evt.end, fn);
       }
-      for (const j of e.speedEvents || []) {
-        const startTime = bpmList.calc2(j.startTime);
-        const endTime = bpmList.calc2(j.endTime);
-        layer.pushSpeedEvent(startTime, endTime, j.start, j.end);
+      for (const evt of evts.speedEvents || []) {
+        const startTime = bpmList.calc2(evt.startTime);
+        const endTime = bpmList.calc2(evt.endTime);
+        layer.pushSpeedEvent(startTime, endTime, evt.start, evt.end);
       }
       lineRPE.eventLayers.push(layer);
     }
@@ -647,7 +648,7 @@ export function parse(pec: string, filename: string): {
     result.numOfNotes! += judgeLine.numOfNotes;
   }
   return { data: result, messages: warnings, info, line, format };
-  function getWarning(code: EasingCode, le: LineEventRPE) {
+  function getEasingWarning(code: EasingCode, le: LineEventRPE) {
     if (code === EasingCode.TypeNotSupported) warn(1, 'EasingTypeWarning', `未知的缓动类型:${le.easingType}(将被视为1)\n位于:"${JSON.stringify(le)}"`);
     if (code === EasingCode.LeftEqualsRight) warn(1, 'EasingClipWarning', `检测到easingLeft等于easingRight(将被视为线性)\n位于:"${JSON.stringify(le)}"`);
     if (code === EasingCode.ValueNotFinite) warn(1, 'EasingClipWarning', `非法的缓动函数(将被视为线性)\n位于:"${JSON.stringify(le)}"`);
