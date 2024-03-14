@@ -517,7 +517,7 @@ interface JudgeLineRPEExtends extends JudgeLineRPE {
   LineId: number;
   judgeLineRPE: LineRPE1;
 }
-export function parse(pec: string, filename: string): {
+export function parse(pec: string, pathname: string, filename: string): {
   data: ChartPGS;
   messages: BetterMessage[];
   info: Record<string, string>;
@@ -529,7 +529,7 @@ export function parse(pec: string, filename: string): {
   if (!meta?.RPEVersion) throw new Error('Invalid rpe file');
   const result = { formatVersion: 3, offset: 0, numOfNotes: 0, judgeLineList: [] } as ChartPGS;
   const warnings = [] as BetterMessage[];
-  const warn = (code: number, name: string, message: string) => warnings.push({ host: 'RPE2JSON', code, name, message, target: filename });
+  const warn = (code: number, name: string, message: string) => warnings.push({ host: 'RPE2JSON', code, name, message, target: pathname });
   warn(0, 'RPEVersionNotice', `RPE谱面兼容建设中...\n检测到RPE版本:${meta.RPEVersion}`);
   const format = `RPE(${meta.RPEVersion})`;
   // 谱面信息
@@ -582,7 +582,7 @@ export function parse(pec: string, filename: string): {
       for (const note of i.notes) {
         if (note.alpha === undefined) note.alpha = 255;
         if (note.above !== 1 && note.above !== 2) warn(1, 'NoteSideWarning', `检测到非法方向:${note.above}(将被视为2)\n位于:"${JSON.stringify(note)}"`);
-        if (note.isFake !== 0) warn(1, 'NoteFakeWarning', `检测到FakeNote(可能无法正常显示)\n位于:"${JSON.stringify(note)}"`);
+        if (note.isFake !== 0) warn(1, 'NoteFakeWarning', `检测到Fake音符(可能无法正常显示)\n位于:"${JSON.stringify(note)}"`);
         if (note.size !== 1) warn(1, 'ImplementionWarning', `未兼容size=${note.size}(可能无法正常显示)\n位于:"${JSON.stringify(note)}"`);
         if (note.yOffset !== 0) warn(1, 'ImplementionWarning', `未兼容yOffset=${note.yOffset}(可能无法正常显示)\n位于:"${JSON.stringify(note)}"`);
         if (note.visibleTime !== 999999) warn(1, 'ImplementionWarning', `未兼容visibleTime=${note.visibleTime}(可能无法正常显示)\n位于:"${JSON.stringify(note)}"`);
@@ -643,7 +643,7 @@ export function parse(pec: string, filename: string): {
   }
   for (const i of data.judgeLineList) {
     const lineRPE = i.judgeLineRPE; // TODO: 待优化
-    const judgeLine = lineRPE.format({ onwarning: (msg: string) => warn(1, 'OtherWarning', `${msg}`) });
+    const judgeLine = lineRPE.format({ onwarning: (msg: string) => warn(1, 'OtherWarning', msg) });
     result.judgeLineList.push(judgeLine);
     result.numOfNotes! += judgeLine.numOfNotes;
   }

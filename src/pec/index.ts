@@ -13,8 +13,8 @@ namespace PEC {
     }
     return result;
   }
-  export function parseRPE(pec: string, filename: string): ReturnType<typeof parseRPE$> {
-    const result = parseRPE$(pec, filename);
+  export function parseRPE(pec: string, pathname: string, filename: string): ReturnType<typeof parseRPE$> {
+    const result = parseRPE$(pec, pathname, filename);
     for (const line of result.data.judgeLineList) {
       normalizeSpeedEvents(line.speedEvents);
       normalizeLineEvents(line.judgeLineDisappearEvents);
